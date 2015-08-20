@@ -12,6 +12,5 @@ public class Main {
 }
 
 /**
- * pridat sposob vytvorenia registra v RegistriLoad
  * 
  */

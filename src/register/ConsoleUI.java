@@ -43,7 +43,7 @@ public class ConsoleUI implements Serializable {
 
 	public ConsoleUI() throws Exception {
 		while (!"1".equals(choice) || !"2".equals(choice) || !"3".equals(choice)) {
-			System.out.println("Vyber si zdroj pre nacitanie registra:\n1.) subor\n2.) txt subor\n3.) databaza");
+			System.out.println("Vyber si zdroj pre nacitanie registra:\n1.) .bin subor\n2.) .txt subor\n3.) databaza");
 			choice = readLine();
 			if ("1".equals(choice)) {
 				this.register = reg.registerLoad();
@@ -79,15 +79,25 @@ public class ConsoleUI implements Serializable {
 				findInRegister();
 				break;
 			case EXIT:
-				regTxt.writeRegister(register);
-				if ("1".equals(choice)) {
-					reg.writeRegister(register);
-				} else if ("2".equals(choice)) {
-					regTxt.writeRegister(register);
-				} else if ("3".equals(choice)) {
-					regDat.writeRegister(register);
+				while (!"1".equals(choice) || !"2".equals(choice) || !"3".equals(choice) || !"4".equals(choice)) {
+					System.out.println(
+							"Vyber si ciel pre ulozenie registra:\n1.) .bin subor\n2.) .txt subor\n3.) databaza\n4.) ukoncit bez ulozenia");
+					choice = readLine();
+					if ("1".equals(choice)) {
+						reg.writeRegister(register);
+						return;
+					} else if ("2".equals(choice)) {
+						regTxt.writeRegister(register);
+						return;
+					} else if ("3".equals(choice)) {
+						regDat.writeRegister(register);
+						return;
+					} else if ("4".equals(choice)) {
+						System.out.println("Register nebol ulozeny.");
+						return;
+					} else
+						System.out.println("Zadal si zlu volbu!");
 				}
-				return;
 			}
 		}
 	}

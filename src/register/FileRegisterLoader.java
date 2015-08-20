@@ -16,7 +16,7 @@ public class FileRegisterLoader implements Registerable {
 	public void writeRegister(Register register) {
 		try (FileOutputStream out = new FileOutputStream(FILE); ObjectOutputStream su = new ObjectOutputStream(out)) {
 			su.writeObject(register);
-			System.out.println("Register bol uspesne zapisany do suboru.");
+			System.out.println("Register bol uspesne zapisany do .bin suboru.");
 		} catch (Exception e) {
 			System.err.println("Data sa do suboru ulozit nepodarilo. Chyba: " + e.getMessage());
 		}
@@ -30,8 +30,8 @@ public class FileRegisterLoader implements Registerable {
 			System.out.println("Subor s registrom uspesne nacitany!");
 			return register;
 		} catch (Exception e) {
-			System.out.println("Subor s registrom neexistuje. Bude vytvoreny novy subor.");
-			System.out.println("Vyber si typ registra, ktory bude dany subor obsahovat:\n1) ArrayRegister\n2) ListRegister");
+			System.out.println("Pri nacitavani .bin subora doslo k chybe: "+e.getMessage());
+			System.out.println("Vyber si typ registra, ktory chces vytvorit:\n1) ArrayRegister\n2) ListRegister");
 			String choice = "";
 			while (!"1".equals(choice) || !"2".equals(choice)) {
 				choice = readLine();
