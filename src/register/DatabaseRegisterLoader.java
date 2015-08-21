@@ -20,6 +20,9 @@ public class DatabaseRegisterLoader implements Registerable {
 	public static final String QUERYSELECT = "SELECT id, name, phonenumber FROM register";
 	private static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
+	/**
+	 * Metoda vytvori spojenie s databazou a zapise do nej udaje.
+	 */
 	@Override
 	public void writeRegister(Register register) {
 		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD)) {
@@ -38,15 +41,19 @@ public class DatabaseRegisterLoader implements Registerable {
 				pstmt.executeUpdate();
 			}
 			pstmt.close();
-			// con.close();
-			System.out.println("Register bol uspesne zapisany do databazy.");
+			System.out.println("Register saved to database successfully.");
 		} catch (SQLException e) {
-			System.out.println("Pri zapisovani do databazy doslo k chybe: " + e.getMessage());			
+			System.out.println("Error occured while saving to database: " + e.getMessage());
 		}
 	}
 
+	/**
+	 * Metoda vytvori spojenie s databazou a nacita z nej udaje.
+	 * 
+	 * @return register nacitany register
+	 */
 	@Override
-	public Register registerLoad(){
+	public Register registerLoad() {
 		Register register = null;
 		try (Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
 				Statement stmt = con.createStatement();
@@ -55,10 +62,10 @@ public class DatabaseRegisterLoader implements Registerable {
 			while (rs.next()) {
 				register.addPerson(new Person(rs.getString(2), rs.getString(3)));
 			}
-			System.out.println("Databaza s registrom uspesne nacitana!");
+			System.out.println("Database with register loaded successfully.");
 			return register;
 		} catch (SQLException e) {
-			System.out.println("Pri nacitavani z databazy doslo k chybe: "+e.getMessage());
+			System.out.println("Error occured while loading database: " + e.getMessage());
 			System.out.println("Vyber si typ registra, ktory chces vytvorit:\n1) ArrayRegister\n2) ListRegister");
 			String choice = "";
 			while (!"1".equals(choice) || !"2".equals(choice)) {
@@ -72,13 +79,19 @@ public class DatabaseRegisterLoader implements Registerable {
 					writeRegister(register);
 					return register;
 				} else {
-					System.out.println("Zadal si zlu volbu, vyber si medzi moznostou 1 alebo 2:\n1) ArrayRegister\n2) ListRegister");
+					System.out.println(
+							"Wrong choice! You must select between 1 or 2:\n1) ArrayRegister\n2) ListRegister");
 				}
 			}
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Metoda nacitava vstup od pouzivatela.
+	 * 
+	 * @return
+	 */
 	private static String readLine() {
 		try {
 			return input.readLine();

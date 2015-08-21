@@ -17,8 +17,56 @@ public class ListRegister implements Register, Serializable {
 		return persons.iterator();
 	}
 
-	/** Number of persons in this register. */
+	/**
+	 * Metoda vrati osobu z registra podla zadaneho mena.
+	 * 
+	 * @param name
+	 *            meno, podla ktoreho ma vyhladavat
+	 * @return p osoba, ktora bola najdena v registri podla zadaneho mena
+	 */
+	@Override
+	public Person findPersonByName(String name) {
+		Iterator<Person> iterator = persons.iterator();
+		while (iterator.hasNext()) {
+			Person p = iterator.next();
+			if (p.getName().equals(name)) {
+				return p;
+			}
+		}
+		return null;
+	}
 
+	/**
+	 * Metoda vrati osobu z registra podla zadaneho telefonneho cisla.
+	 * 
+	 * @param phoneNumber
+	 *            cislo, podla ktoreho ma vyhladavat
+	 * @return osoba, ktora bola najdena v registri podla zadaneho cisla
+	 */
+	@Override
+	public Person findPersonByPhoneNumber(String phoneNumber) {
+		return persons.stream().filter(s -> s.getPhoneNumber().equals(phoneNumber)).findFirst().get();
+	}
+
+	/**
+	 * Metoda vymaze zvolenu osobu z registra a znova usporiada register.
+	 * 
+	 * @param person
+	 *            zadana osoba v registry, ktora ma byt zmazana
+	 */
+	@Override
+	public void removePerson(Person person) {
+		persons.remove(person);
+		Collections.sort(persons);
+	}
+	/**
+	 * Metoda usporiada register.
+	 */
+	public void sortList() {
+		Collections.sort(persons);
+	}
+
+	/** Number of persons in this register. */
 	@Override
 	public int getCount() {
 		return persons.size();
@@ -39,42 +87,4 @@ public class ListRegister implements Register, Serializable {
 		persons.add(person);
 		Collections.sort(persons);
 	}
-
-	@Override
-	public Person findPersonByName(String name) {
-		// return persons.stream().filter(s ->
-		// s.getPhoneNumber().equals(name)).findFirst().get();
-		Iterator<Person> iterator = persons.iterator();
-		while (iterator.hasNext()) {
-			Person p = iterator.next();
-			if (p.getName().equals(name)) {
-				return p;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public Person findPersonByPhoneNumber(String phoneNumber) {
-		return persons.stream().filter(s -> s.getPhoneNumber().equals(phoneNumber)).findFirst().get();
-		// Iterator<Person> iterator=persons.iterator();
-		// while (iterator.hasNext()){
-		// Person p=iterator.next();
-		// if (p.getPhoneNumber().equals(phoneNumber)){
-		// return p;
-		// }
-		// }
-		// return null;
-	}
-
-	@Override
-	public void removePerson(Person person) {
-		persons.remove(person);
-		Collections.sort(persons);
-	}
-	
-	public void sortList(){
-		Collections.sort(persons);
-	}
-
 }

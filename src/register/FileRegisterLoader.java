@@ -12,26 +12,32 @@ public class FileRegisterLoader implements Registerable {
 	private static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 	private static final String FILE = "register.bin";
 
+	/**
+	 * Metoda zapise vytvoreny register do .bin suboru.
+	 */
 	@Override
 	public void writeRegister(Register register) {
 		try (FileOutputStream out = new FileOutputStream(FILE); ObjectOutputStream su = new ObjectOutputStream(out)) {
 			su.writeObject(register);
-			System.out.println("Register bol uspesne zapisany do .bin suboru.");
+			System.out.println("Register saved to .bin file successfully.");
 		} catch (Exception e) {
-			System.err.println("Data sa do suboru ulozit nepodarilo. Chyba: " + e.getMessage());
+			System.err.println("Error occured while saving register: " + e.getMessage());
 		}
 	}
 
+	/**
+	 * Metoda nacita register zo zvoleneho suboru.
+	 */
 	@Override
 	public Register registerLoad() {
 		Register register = null;
 		try (FileInputStream in = new FileInputStream(FILE); ObjectInputStream si = new ObjectInputStream(in)) {
 			register = (Register) si.readObject();
-			System.out.println("Subor s registrom uspesne nacitany!");
+			System.out.println(".bin file with register loaded successfully.");
 			return register;
 		} catch (Exception e) {
-			System.out.println("Pri nacitavani .bin subora doslo k chybe: "+e.getMessage());
-			System.out.println("Vyber si typ registra, ktory chces vytvorit:\n1) ArrayRegister\n2) ListRegister");
+			System.out.println("Error occured while loading .bin file: " + e.getMessage());
+			System.out.println("Select type of the register, you want to create:\n1) ArrayRegister\n2) ListRegister");
 			String choice = "";
 			while (!"1".equals(choice) || !"2".equals(choice)) {
 				choice = readLine();
@@ -44,13 +50,19 @@ public class FileRegisterLoader implements Registerable {
 					writeRegister(register);
 					return register;
 				} else {
-					System.out.println("Zadal si zlu volbu, vyber si medzi moznostou 1 alebo 2:\n1) ArrayRegister\n2) ListRegister");
+					System.out.println(
+							"Wrong choice! You must select between 1 or 2:\n1) ArrayRegister\n2) ListRegister");
 				}
 			}
 		}
 		return null;
 	}
 
+	/**
+	 * Metoda nacitava vstup od pouzivatela.
+	 * 
+	 * @return
+	 */
 	private static String readLine() {
 		try {
 			return input.readLine();

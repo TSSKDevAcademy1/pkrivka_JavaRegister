@@ -6,20 +6,14 @@ import java.io.Serializable;
  * register.Person.
  */
 public class Person implements Serializable, Comparable<Person> {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/** Name of this person. */
 	private String name;
-
 	/** Phone number of this person. */
 	private String phoneNumber;
 
 	/**
-	 * Construct a person.
-	 * 
 	 * @param name
 	 *            name of the person
 	 * @param phoneNumber
@@ -28,6 +22,12 @@ public class Person implements Serializable, Comparable<Person> {
 	public Person(String name, String phoneNumber) {
 		this.name = name;
 		this.setPhoneNumber(phoneNumber);
+	}
+
+	@Override
+	public int compareTo(Person o) {
+		this.name.compareToIgnoreCase(o.name);
+		return this.name.compareToIgnoreCase(o.name);
 	}
 
 	/**
@@ -66,14 +66,14 @@ public class Person implements Serializable, Comparable<Person> {
 	 */
 	public void setPhoneNumber(String phoneNumberNew) {
 		if (!isValidPhoneNumber(phoneNumberNew)) {
-			throw new RuntimeException("Phone number is not valid");
+			System.out.println("Phone number is not valid");
+		} else {
+			phoneNumber = phoneNumberNew;
 		}
-		phoneNumber = phoneNumberNew;
 	}
 
 	/**
 	 * Validates the phone number. Valid phone numbers contains only digits.
-	 * Kontroluje tiez, ci je zadane cislo spravneho formatu
 	 * 
 	 * @param phoneNumber
 	 *            phone number to validate
@@ -82,13 +82,6 @@ public class Person implements Serializable, Comparable<Person> {
 	 */
 	private boolean isValidPhoneNumber(String phoneNumber) {
 		return phoneNumber.matches("([0-9]){10}");
-		// Pattern p = Pattern.compile("([0-9]){10}");
-		// Matcher matcher = p.matcher(phoneNumber);
-		// if (matcher.matches()) {
-		// return true;
-		// } else {
-		// return false;
-		// }
 	}
 
 	/**
@@ -98,11 +91,5 @@ public class Person implements Serializable, Comparable<Person> {
 	 */
 	public String toString() {
 		return name + " (" + phoneNumber + ")";
-	}
-
-	@Override
-	public int compareTo(Person o) {
-		this.name.compareToIgnoreCase(o.name);
-		return this.name.compareToIgnoreCase(o.name);
 	}
 }

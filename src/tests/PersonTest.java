@@ -20,16 +20,16 @@ public class PersonTest {
 	}
 
 	//
-	@Test(expected=Exception.class)
-	public void wrongNumberLength(){
+	@Test(expected = Exception.class)
+	public void wrongNumberLength() {
 		person.setPhoneNumber("09081247415268");
 	}
-	
-	@Test(expected=Exception.class)
-	public void wrongNumberContent(){
+
+	@Test(expected = Exception.class)
+	public void wrongNumberContent() {
 		person.setPhoneNumber("adf08745fd");
 	}
-	
+
 	@Test
 	public void wrongNumber() {
 		Throwable error = null;
@@ -47,7 +47,6 @@ public class PersonTest {
 			assertTrue(error instanceof RuntimeException);
 			error = null;
 		}
-
 	}
 
 	@Test
@@ -67,7 +66,5 @@ public class PersonTest {
 			assertFalse(error instanceof RuntimeException);
 			error = null;
 		}
-
 	}
-
 }
